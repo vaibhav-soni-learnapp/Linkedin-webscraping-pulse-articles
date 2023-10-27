@@ -72,3 +72,23 @@ if download_button:
             file_name="extracted_data.csv",
             mime="text/csv"
         )
+
+
+# Initialize session state
+if 'df' not in st.session_state:
+    st.session_state.df = pd.DataFrame()  # Replace this with your actual DataFrame
+
+# Your existing DataFrame display code
+st.dataframe(st.session_state.df)
+
+# Button to export DataFrame to CSV
+csv_export = st.button('Export to CSV')
+if csv_export:
+    csv_buffer = StringIO()
+    st.session_state.df.to_csv(csv_buffer, index=False)
+    st.download_button(
+        label="Download CSV",
+        data=csv_buffer,
+        file_name="extracted_data.csv",
+        mime="text/csv"
+    )
