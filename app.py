@@ -18,7 +18,11 @@ def extract_classes(file_path, classes):
         elements = []
         for single_class in class_list.split('.'):
             if single_class:  # To skip empty strings
-                elements.extend(soup.select(f'.{single_class}'))
+                if '[' in single_class and ']' in single_class:
+                    # Special handling for class names with square brackets
+                    elements.extend([tag for tag in soup.find_all(class_=True) if single_class.replace('[', '\[').replace(']', '\]') in tag['class']])
+                else:
+                    elements.extend(soup.find_all(class_=single_class))
         extracted_texts = [element.text.strip() for element in elements]
         extracted_data[class_name] = " ".join(extracted_texts)
     
