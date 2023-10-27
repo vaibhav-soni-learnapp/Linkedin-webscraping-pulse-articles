@@ -15,9 +15,11 @@ def extract_classes(file_path, classes):
     
     extracted_data = {}
     for class_name, class_list in classes.items():
-        elements = soup.select(class_list)
+        elements = []
+        for single_class in class_list.split('.'):
+            if single_class:  # To skip empty strings
+                elements.extend(soup.select(f'.{single_class}'))
         extracted_texts = [element.text.strip() for element in elements]
-        # Join all elements' text into one string for this class
         extracted_data[class_name] = " ".join(extracted_texts)
     
     return extracted_data
@@ -25,7 +27,7 @@ def extract_classes(file_path, classes):
 # Streamlit UI
 st.title('HTML Scraper and Data Exporter')
 
-default_url = 'https://www.linkedin.com/pulse/topics/business-administration-s50111/product-management-s624'  # Replace with your default URL
+default_url = 'http://example.com'  # Replace with your default URL
 url = st.text_input('Enter URL to scrape:', default_url)
 download_button = st.button('Download HTML')
 
