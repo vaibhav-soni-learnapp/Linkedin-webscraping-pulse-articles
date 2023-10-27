@@ -31,7 +31,7 @@ def extract_classes(file_path, classes):
 # Streamlit UI
 st.title('HTML Scraper and Data Exporter')
 
-default_url = 'http://example.com'  # Replace with your default URL
+default_url = 'https://www.linkedin.com/pulse/topics/business-administration-s50111/product-management-s624/'  # Replace with your default URL
 url = st.text_input('Enter URL to scrape:', default_url)
 download_button = st.button('Download HTML')
 
