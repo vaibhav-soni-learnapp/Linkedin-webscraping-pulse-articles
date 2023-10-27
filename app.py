@@ -1,6 +1,6 @@
 import streamlit as st
 import requests
-from bs4 import BeautifulSoup
+from bs4 import beautifulsoup4
 import pandas as pd
 from io import StringIO
 
