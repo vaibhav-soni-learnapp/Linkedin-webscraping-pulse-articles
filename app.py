@@ -13,7 +13,7 @@ def extract_classes(file_path, classes):
     with open(file_path, "r") as f:
         soup = BeautifulSoup(f, 'html.parser')
     
-    extracted_data = {}
+    extracted_data_list = []
     for class_name, class_list in classes.items():
         elements = []
         for single_class in class_list.split('.'):
@@ -23,10 +23,12 @@ def extract_classes(file_path, classes):
                     elements.extend([tag for tag in soup.find_all(class_=True) if single_class.replace('[', '\[').replace(']', '\]') in tag['class']])
                 else:
                     elements.extend(soup.find_all(class_=single_class))
-        extracted_texts = [element.text.strip() for element in elements]
-        extracted_data[class_name] = " ".join(extracted_texts)
+        for element in elements:
+            extracted_data = {}
+            extracted_data[class_name] = element.text.strip()
+            extracted_data_list.append(extracted_data)
     
-    return extracted_data
+    return extracted_data_list
 
 # Streamlit UI
 st.title('HTML Scraper and Data Exporter')
@@ -46,9 +48,9 @@ if download_button:
         'content_description_class_text': '.content-description.mt-0.5.break-words.font-sans.text-sm.font-normal.babybear:text-xs'
     }
 
-    extracted_data = extract_classes("downloaded_page.html", classes_to_extract)
-    # Convert dictionary to DataFrame for easier CSV export
-    df = pd.DataFrame([extracted_data])
+    extracted_data_list = extract_classes("downloaded_page.html", classes_to_extract)
+    # Convert list of dictionaries to DataFrame for easier CSV export
+    df = pd.DataFrame(extracted_data_list)
 
     st.table(df)
 
