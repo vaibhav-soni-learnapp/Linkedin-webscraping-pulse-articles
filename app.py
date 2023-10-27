@@ -55,12 +55,12 @@ if download_button:
     # Create a DataFrame from the extracted text
     df = pd.DataFrame({
         'Questions': mb_1_text,
-        'ontributions': pr_05_pt_05_text,
+        'Contributions': pr_05_pt_05_text,
         'time': before_middot_pt_05_text,
         'description': content_description_text
     })
 
-    st.table(df)
+    st.dataframe(df)
 
     csv_export = st.button('Export to CSV')
     if csv_export:
