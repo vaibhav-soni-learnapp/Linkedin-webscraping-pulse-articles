@@ -45,6 +45,13 @@ if download_button:
     for tag in soup.find_all(class_='content-description mt-0.5 break-words font-sans text-sm font-normal babybear:text-xs'):
         content_description_text.append(tag.text.strip())
 
+    # Align the lengths of all lists to be the same for dataframe creation
+    max_len = max(len(mb_1_text), len(pr_05_pt_05_text), len(before_middot_pt_05_text), len(content_description_text))
+    mb_1_text = (mb_1_text + [None] * (max_len - len(mb_1_text)))[:max_len]
+    pr_05_pt_05_text = (pr_05_pt_05_text + [None] * (max_len - len(pr_05_pt_05_text)))[:max_len]
+    before_middot_pt_05_text = (before_middot_pt_05_text + [None] * (max_len - len(before_middot_pt_05_text)))[:max_len]
+    content_description_text = (content_description_text + [None] * (max_len - len(content_description_text)))[:max_len]
+
     # Create a DataFrame from the extracted text
     df = pd.DataFrame({
         'mb_1_class_text': mb_1_text,
@@ -52,11 +59,6 @@ if download_button:
         'before_middot_pt_05_class_text': before_middot_pt_05_text,
         'content_description_class_text': content_description_text
     })
-
-    # Align the lengths of all lists to be the same for dataframe creation
-    max_len = max(len(mb_1_text), len(pr_05_pt_05_text), len(before_middot_pt_05_text), len(content_description_text))
-    for key, value in df.items():
-        df[key] = (value.tolist() + [None] * (max_len - len(value)))[:max_len]
 
     st.table(df)
 
