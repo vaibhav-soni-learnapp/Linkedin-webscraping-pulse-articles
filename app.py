@@ -54,10 +54,10 @@ if download_button:
 
     # Create a DataFrame from the extracted text
     df = pd.DataFrame({
-        'mb_1_class_text': mb_1_text,
-        'pr_05_pt_05_class_text': pr_05_pt_05_text,
-        'before_middot_pt_05_class_text': before_middot_pt_05_text,
-        'content_description_class_text': content_description_text
+        'Questions': mb_1_text,
+        'ontributions': pr_05_pt_05_text,
+        'time': before_middot_pt_05_text,
+        'description': content_description_text
     })
 
     st.table(df)
